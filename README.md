@@ -1,5 +1,7 @@
 # 🏥 Kllinic - Comprehensive Healthcare Platform
 
+### Deployment link- https://git-checkout.vercel.app/
+
 ## 🌟 Overview
 
 **Kllinic** is a revolutionary hyperlocal healthcare hub that connects patients, pharmacies, and clinics in a unified digital ecosystem. Built with modern web technologies, it provides a seamless healthcare experience for all stakeholders in the healthcare chain.
@@ -74,6 +76,8 @@ A social platform within healthcare that includes:
 - **AI Chatbot**: Multilingual health assistance (English/Hindi)
 - **Smart Stock Management**: Predictive inventory management for pharmacies
 - **Health Risk Assessment**: Pattern recognition in health data
+
+###📊 AI-Powered Price Forcast
 
 ### 📱 Responsive Design
 - **Mobile-First**: Optimized for all device sizes
