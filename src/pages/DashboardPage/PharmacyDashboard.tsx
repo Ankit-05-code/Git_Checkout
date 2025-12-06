@@ -31,7 +31,6 @@ interface MedicineOrder {
 const PharmacyDashboard = () => {
   const { user, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
-  const [pharmacyName, setPharmacyName] = useState<string>("Pharmacy");
   const [pharmacyId, setPharmacyId] = useState<string | null>(null);
   const [orders, setOrders] = useState<MedicineOrder[]>([]);
   const [pendingOrders, setPendingOrders] = useState(0);
@@ -159,7 +158,6 @@ const PharmacyDashboard = () => {
     try {
       await signOut();
       toast.success("Logged out successfully");
-      setPharmacyName("Pharmacy");
       navigate('/');
     } catch (error) {
       console.error("Logout error:", error);
@@ -183,7 +181,7 @@ const PharmacyDashboard = () => {
             <h1 className="text-2xl font-bold">Kllinic Pharmacy</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-muted-foreground">Hello, {pharmacyName}</span>
+            <span className="text-muted-foreground">Hello, Pharmacy</span>
             <div className="flex gap-2">
               <StockManagement pharmacyId={pharmacyId || ""} />
               <BillGenerator 

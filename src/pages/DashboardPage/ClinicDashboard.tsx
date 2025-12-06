@@ -31,7 +31,6 @@ interface Appointment {
 const ClinicDashboard = () => {
   const { user, loading: authLoading, signOut } = useAuth();
   const navigate = useNavigate();
-  const [clinicName, setClinicName] = useState<string>("Clinic");
   const [clinicId, setClinicId] = useState<string | null>(null);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [todayAppointments, setTodayAppointments] = useState(0);
@@ -59,12 +58,11 @@ const ClinicDashboard = () => {
     
     const { data, error } = await supabase
       .from('clinics')
-      .select('id, clinic_name')
+      .select('id')
       .eq('user_id', user.id)
       .single();
 
     if (!error && data) {
-      setClinicName(data.clinic_name);
       setClinicId(data.id);
     }
   };
@@ -139,7 +137,6 @@ const ClinicDashboard = () => {
     try {
       await signOut();
       toast.success("Logged out successfully");
-      setClinicName("Clinic");
       navigate('/');
     } catch (error) {
       console.error("Logout error:", error);
@@ -173,7 +170,7 @@ const ClinicDashboard = () => {
             <h1 className="text-2xl font-bold">Kllinic</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-muted-foreground">Hello, {clinicName}</span>
+            <span className="text-muted-foreground">Hello, Clinic</span>
             <DoctorManagement clinicId={clinicId || ""} />
             <DarkModeToggle />
             <Button variant="outline" onClick={handleLogout}>

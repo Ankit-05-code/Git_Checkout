@@ -64,7 +64,6 @@ const PatientDashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [specialtyFilter, setSpecialtyFilter] = useState("all");
   const [specialties, setSpecialties] = useState<{ id: string; name: string }[]>([]);
-  const [patientName, setPatientName] = useState<string>("Patient");
   const [showCommunity, setShowCommunity] = useState(false);
 
   useEffect(() => {
@@ -79,23 +78,8 @@ const PatientDashboard = () => {
       fetchPharmacies();
       fetchClinics();
       fetchSpecialties();
-      fetchPatientName();
     }
   }, [user]);
-
-  const fetchPatientName = async () => {
-    if (!user?.id) return;
-    
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('full_name')
-      .eq('id', user.id)
-      .single();
-
-    if (!error && data?.full_name) {
-      setPatientName(data.full_name);
-    }
-  };
 
   const fetchAppointments = async () => {
     if (!user?.id) return;
@@ -217,7 +201,7 @@ const PatientDashboard = () => {
             <h1 className="text-2xl font-bold">Kllinic</h1>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-muted-foreground">Hello, {patientName}</span>
+            <span className="text-muted-foreground">Hello, Patient</span>
             <DarkModeToggle />
             <Button variant="outline" onClick={handleLogout}>
               Logout
