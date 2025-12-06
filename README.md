@@ -95,4 +95,4 @@ Solving fragmented patient data through interoperability.
 * **Concept:** A shared, patient-consented medical record system.
 * **Utility:** Allows a doctor at **Clinic A** to securely view treatment history from **Clinic B**, ensuring continuity of care and better diagnostic accuracy.
 
-https://git-checkout.vercel.app/
+### Deployment link- https://git-checkout.vercel.app/
