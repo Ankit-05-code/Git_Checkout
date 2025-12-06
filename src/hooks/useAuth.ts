@@ -15,42 +15,48 @@ export const useAuth = () => {
       async (_event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-        setLoading(false); // Always set loading to false when auth state changes
-        
+
         if (session?.user) {
-          // Defer role fetching with error handling
-          setTimeout(async () => {
-            try {
-              const userRole = await getUserRole(session.user.id);
-              setRole(userRole);
-            } catch (error) {
-              console.error('Failed to fetch user role:', error);
-              // Set a default role if fetch fails
-              setRole('patient');
-            }
-          }, 0);
+          // Keep loading true until we resolve the user's role
+          setLoading(true);
+          try {
+            const userRole = await getUserRole(session.user.id);
+            setRole(userRole);
+          } catch (error) {
+            console.error('Failed to fetch user role:', error);
+            // Don't assume a default role on error — set to null so callers
+            // can explicitly handle missing roles.
+            setRole(null);
+          } finally {
+            setLoading(false);
+          }
         } else {
           setRole(null);
+          setLoading(false);
         }
       }
     );
 
-    // Check for existing session
+    // Check for existing session on mount
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       setSession(session);
       setUser(session?.user ?? null);
-      
+
       if (session?.user) {
+        setLoading(true);
         try {
           const userRole = await getUserRole(session.user.id);
           setRole(userRole);
         } catch (error) {
           console.error('Failed to fetch user role:', error);
-          // Set a default role if fetch fails
-          setRole('patient');
+          setRole(null);
+        } finally {
+          setLoading(false);
         }
+      } else {
+        setRole(null);
+        setLoading(false);
       }
-      setLoading(false);
     });
 
     return () => subscription.unsubscribe();

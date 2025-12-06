@@ -42,11 +42,9 @@ const Login = () => {
         setLoading(false);
       } else {
         toast.success("Login successful!");
-        // Wait a bit for auth state to update, then redirect
-        setTimeout(() => {
-          // Force redirect to patient dashboard as default
-          navigate('/dashboard/patient');
-        }, 1000);
+        // Don't force a default redirect here — wait for `useAuth` to load the
+        // user's role and perform the appropriate role-based navigation.
+        setLoading(false);
       }
     } catch (err: any) {
       toast.error("Invalid email or password");
